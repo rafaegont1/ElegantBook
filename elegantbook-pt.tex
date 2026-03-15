@@ -1,0 +1,922 @@
+\documentclass[lang=pt,11pt]{elegantbook}
+
+\title{Robótica educacional}
+\subtitle{Programação e Matemática}
+
+\author{Rafael Guimarães Gontijo \& Emerson de Sousa Costa}
+\institute{CEFET-MG}
+\date{\today}
+\version{1.0}
+\bioinfo{Bio}{Informação}
+
+\extrainfo{\textcolor{red}{\bfseries Cuidado: Este modelo é apenas um exemplo.}}
+
+\setcounter{tocdepth}{3}
+
+\logo{logo-blue.png}
+\cover{cover.jpg}
+
+% modify the color in the middle of titlepage
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+
+\addbibresource[location=local]{reference.bib} % bib
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+\tableofcontents
+
+\mainmatter
+
+\chapter{Introdução}
+
+\begin{introduction}
+  \item O Arduino Nano
+  \item Programação em Python
+  \item Componentes eletrônicos
+\end{introduction}
+
+O arduino Nano é uma placa de desenvolvimento versátil bastante utilizada para prototipagem de projetos eletrônicos. Com ela, é possível construir desde sistemas de automação residencial até robôs e instrumentos musicais interativos. Assim, é possível estimular a criatividade e pôr em prática conhecimentos relacionados à matemática, ciência e programação.
+
+Para utilizá-lo, a forma mais comum é instalar o Arduino IDE, um ambiente de desenvolvimento com uma linguagem baseada em C/C++, e conectar a placa Arduino ao computador com um cabo Micro-B USB. Porém, essa abordagem pode apresentar uma curva de aprendizado íngreme para alguns estudantes, especialmente para crianças, adolescentes ou qualquer um que não possua familiaridade com linguagens de programação textual.
+
+Para tornar a programação e a eletrônica mais acessíveis e próximas do mercado de trabalho, utiliza-se a linguagem Python. Python é conhecida por sua simplicidade e legibilidade, sendo amplamente utilizada em ciência de dados, inteligência artificial e automação.
+
+Neste contexto, tem-se o Telemetrix como uma ferramenta poderosa para controle de hardware. O Telemetrix permite que usuários programem o Arduino Nano utilizando Python, enviando comandos do computador para a placa. Assim, reduz-se a complexidade da sintaxe de C++ do Arduino IDE e permite que o estudante se concentre no que realmente importa: o pensamento computacional e a lógica de programação.
+
+Essa abordagem de controle remoto tem raízes históricas no protocolo MIDI (Musical Instrument Digital Interface), desenvolvido na década de 1980 para permitir que computadores e instrumentos musicais se comunicassem. Inspirado pela arquitetura de mensagens do MIDI, surgiu posteriormente o protocolo Firmata, criado para facilitar a comunicação entre microcontroladores e software. O Telemetrix, por sua vez, é uma evolução direta dos conceitos do Firmata, otimizado para oferecer maior desempenho e funcionalidades modernas, mantendo a filosofia de controlar o hardware através de uma linguagem de alto nível como o Python.
+
+Ainda assim o arduino, por si só, é apenas um microcontrolador programável. Sua função é receber e enviar sinais para componentes periféricos. Alguns periféricos de entrada são como sensores de ultrassom, infravermelhos, de luminosidade (LDR), giroscópio, dentre outros. Entre os periféricos de saída temos o LED, buzzer, servo motor, motores DC, etc.
+
+Portanto, antes de iniciar a programação no arduino, é importante compreender conceitos básicos de eletrônica, pois são estes componentes que irão interagir com o arduino, fornecendo dados sobre o ambiente (periféricos de entrada) e atuando sobre ele (periféricos de saída).
+
+\chapter{Circuitos Elétricos}
+
+\begin{introduction}
+  \item Tensão e Corrente
+  \item Resistores e Lei de Ohm
+  \item Componentes básicos
+\end{introduction}
+
+Num átomo, existem prótons (carga positiva) e nêutrons (carga negativa) em seu núcleo. Ao seu redor, ficam os elétrons (carga negativa). Nos materiais, os elétrons estão se movendo, mas de maneira aleatória e desordenada. Uma corrente elétrica nada mais é que um fluxo ordenado de elétrons (ou íons) através de materiais, como um cabo de cobre. Esse fluxo, medido em Amperes (A), ou Coulomb por segundo (C/s), é gerado por uma diferença de potencial elétrico, ou tensão, aplicado sobre os elétrons, que é medido em Volts (V).
+
+A diferença de potencial é, geralmente, criada a partir de uma fonte. Nela, existem os polos negativo e positivo. No polo negativo, existe um excesso de elétrons. Dado que cargas de mesmo sinal se repelem, esses elétrons estão sofrendo uma forte repulsão mútua, e possuem alta energia potencial, querendo "escapar" dali. Do outro lado, no polo positivo, existe uma falta de elétrons. Essa carga positiva exerce uma força de atração sobre os elétrons que estão no polo negativo.
+
+Ainda que os elétrons saiam do polo negativo, em sentido ao negativo, sendo este o sentido real da corrente elétrica, adota-se o sentido convencional da corrente, onde a corrente elétrica vai do polo positivo ao negativo.
+
+Para haver esse fluxo, é necessário que os elétrons estejam em um material condutor. No exemplo anterior, foi utilizado o cobre como material, mas outros materiais como prata, ouro, alumínio e ferro também são condutores. O condutor é o caminho por onde os elétrons passam do polo negativo para o positivo. Geralmente, são utilizados cabos de cobre para gerar fluxos elétricos para que os dispositivos eletrônicos funcionam.
+
+Os elétrons não fluem perfeitamente, mesmo em um bom condutor como o cobre. Eles precisam passar pela estrutura atômica do material. O resistor é um componente que tem como propósito dificultar a passagem de elétron, fazendo com que os elétrons colidam com os átomos que formam a "rede" do material resistor. Essa dificuldade imposta pelo resistor é medida em Ohms. A tabela \ref{resistors} demonstra como ler o valor de um resistor, de acordo com suas cores.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Código de Cores de Resistores}
+	\begin{tabular}{lccl}
+	\toprule
+	\textbf{Cor} & \textbf{Dígito} & \textbf{Multiplicador} & \textbf{Tolerância} \\ 
+    \midrule
+	Preto   & 0 & $\times 1\,\Omega$ & - \\ 
+	Marrom  & 1 & $\times 10\,\Omega$ & $\pm 1\%$ \\ 
+	Vermelho& 2 & $\times 100\,\Omega$ & $\pm 2\%$ \\ 
+	Laranja & 3 & $\times 1\text{k}\,\Omega$ & - \\ 
+	Amarelo & 4 & $\times 10\text{k}\,\Omega$ & - \\ 
+	Verde   & 5 & $\times 100\text{k}\,\Omega$ & $\pm 0,5\%$ \\ 
+	Azul    & 6 & $\times 1\text{M}\,\Omega$ & $\pm 0,25\%$ \\ 
+	Violeta & 7 & $\times 10\text{M}\,\Omega$ & $\pm 0,10\%$ \\ 
+	Cinza   & 8 & - & $\pm 0,05\%$ \\ 
+	Branco  & 9 & - & - \\ 
+	Ouro    & - & $\times 0,1\,\Omega$ & $\pm 5\%$ \\ 
+	Prata   & - & $\times 0,01\,\Omega$ & $\pm 10\%$ \\ 
+	(Sem cor)& - & - & $\pm 20\%$ \\ 
+    \bottomrule
+	\end{tabular}
+	\label{tab:resistors}
+\end{table}
+
+A energia gerada pelas colisões é transferida para os átomos do material resistor, fazendo-o vibrar com mais intensidade. Essa alta vibração dos átomos é o que percebemos como calor. A partir deste fenômeno, denominado efeito Joule, é que conseguimos esquentar a água do chuveiro.
+
+A resistência, medida em Ohm ($\Omega$), pode ser calculada utilizando a primeira lei de Ohm. Ela diz que existe uma proporcionalidade entre a diferença de potencial e a corrente elétrica, de modo que, com uma fonte de tensão de corrente contínua e um resistor (que possuem valores constantes), conseguimos saber qual corrente passará no circuito. A primeira lei de Ohm é calculada a partir da seguinte equação:
+
+\begin{equation}
+	V = R \times I
+\end{equation}
+
+Onde:
+
+\begin{itemize}
+	\item $V$: Tensão elétrica ou ddp (V)
+	\item $R$: Resistência elétrica ($\Omega$)
+	\item $I$: Intensidade da corrente elétrica (A)
+\end{itemize}
+
+A intensidade da corrente elétrica ($I$) é a quantidade de carga que atravessa a seção transversal de um condutor por unidade de tempo. No Sistema Internacional (SI), é medida em \textbf{Ampère (A)}, onde $1 A = 1 C/s$.
+
+\begin{equation}
+    I = \frac{\Delta Q}{\Delta t}
+\end{equation}
+
+Onde:
+\begin{itemize}
+    \item $I$: Intensidade da corrente (Ampères - A);
+    \item $\Delta Q$: Quantidade de carga elétrica (Coulombs - C);
+    \item $\Delta t$: Intervalo de tempo (Segundos - s).
+\end{itemize}
+
+\section{Componentes dos Circuitos Elétricos}
+
+A composição de um circuito elétrico é ditada pela sua função específica, o que significa que ele pode ser formado por uma grande variedade de elementos. Contudo, entre os componentes mais frequentes e fundamentais, encontramos os resistores, fontes de tensão, capacitores, indutores, dentre outros. Vamos analisar cada um deles.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{electrical-electronic-circuit-symbols.jpg}
+  \caption{Símbolos dos componentes eletrônicos.}
+  \label{fig:arduino}
+\end{figure}
+
+\subsection{Resistor e primeira lei de Ohm}
+
+O resistor é um dispositivo elétrico projetado para controlar a passagem da corrente elétrica. Sua principal ação é limitar (ou regular) a corrente elétrica, ou transformar a energia elétrica que passa por ele em outras formas de energia, como a térmica (calor). Fisicamente, um resistor é frequentemente identificado por sua estrutura com quatro faixas coloridas. A sequência específica dessas cores é um código que determina o seu valor de resistência, medido em Ohms ($\Omega$).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{resistor.png}
+  \caption{Exemplo de um Resistor}
+\end{figure}
+
+Formulada por Georg Simon Ohm, a \textbf{Primeira Lei de Ohm} estabelece que a resistência elétrica ($R$) em um condutor é a razão entre a tensão ($V$) e a corrente ($I$).
+
+\begin{equation}
+    V = R \times I
+\end{equation}
+
+O capacitor é um dispositivo com a capacidade de armazenar cargas elétricas. A sua principal característica é acumular energia no circuito e liberá-la rapidamente quando necessário. Por essa razão, ele é comumente empregado em circuitos que demandam correntes elétricas elevadas para sua correta operação. Tal como outros componentes, o capacitor possui seu próprio símbolo para representação em esquemas de circuitos, e tem sua capacitância medida em farad (F), ou Coulomb por Volt (C/V).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.2\textwidth]{capacitor.png}
+  \caption{Exemplo de um Capacitor}
+\end{figure}
+
+\subsection{Fonte de alimentação}
+
+A fonte tem por objetivo converter diferentes formas de energia (como química, mecânica ou solar) em energia elétrica. Eles são a fonte de energia do circuito, fornecendo a "pressão" (diferença de potencial) necessária para impulsionar os elétrons de uma extremidade à outra do condutor. Dentro do gerador, a corrente elétrica se move do terminal de menor potencial (polo negativo) para o de maior potencial (polo positivo). Em diagramas, o gerador é simbolizado por duas barras paralelas de tamanhos diferentes, onde a barra maior e o polo positivo e a barra menor o polo negativo.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{fonte.jpg}
+  \caption{Exemplo de uma Fonte}
+\end{figure}
+
+\subsection{Leis de Kirchhoff}
+
+Além dos componentes elétricos já citados, e outros que não foram mencionados, os circuitos possuem três elementos básicos: nó, ramo e malha. O nó corresponde ao ponto que liga dois ou mais ramos em um circuito elétrico. O ramo é onde se passa a corrente elétrica de um nó a outro. Por fim, a malha corresponde aos caminhos fechados formados pelos ramos de um circuito, podendo ser interna e externa (figura \ref{}).
+Além dos componentes elétricos já citados, e outros que não foram mencionados, os circuitos possuem três elementos básicos: nó, ramo e malha. O nó corresponde ao ponto que liga dois ou mais ramos em um circuito elétrico. O ramo é onde se passa a corrente elétrica de um nó a outro. Por fim, a malha corresponde aos caminhos fechados formados pelos ramos de um circuito, podendo ser interna e externa (figura \ref{fig:malhas}).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{malhas-ramos-e-nos.jpg}
+  \caption{Nós, Ramos e Malhas \label{fig:malhas}}
+\end{figure}
+
+\subsection{Associação de resistores}
+
+No mundo real, os componentes elétricos, como os resistores, são vendidos em valores comerciais padronizados, com valores de $100\Omega$, $220\Omega$, $470\Omega$. Assim, esses componentes elétricos, como resistores, capacitores e indutores podem estar associados em série, paralelo ou misto. A figura \ref{} ilustra a diferença entre resistores em série e em paralelo.
+No mundo real, os componentes elétricos, como os resistores, são vendidos em valores comerciais padronizados, com valores de $100\Omega$, $220\Omega$, $470\Omega$. Assim, esses componentes elétricos, como resistores, capacitores e indutores podem estar associados em série, paralelo ou misto. A figura \ref{fig:assoc} ilustra a diferença entre resistores em série e em paralelo.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{resistores-serie-paralelo.png}
+  \caption{Resistores em Série e em Paralelo \label{fig:assoc}}
+\end{figure}
+
+Assim, é possível “criar” novos valores a partir da criação de diferentes associações de componentes disponíveis. No caso do resistor, quando queremos um resistor equivalente de maior resistência, associamo-os em série (equação \ref{eq:serie}) e, para uma menor resistência, associamos em paralelo (equação \ref{eq:paralelo}).
+
+\begin{equation}
+	R_{eq} = R_1 + R_2 + \dots + R_n
+	\label{eq:serie}
+\end{equation}
+
+\begin{equation}
+	\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \dots
+	\label{eq:paralelo}
+\end{equation}
+
+Para os capacitores, utilizamos as mesmas equações, porém invertidas: a soma direta acontece no paralelo. Já os indutores utilizam a mesma lógica dos resistores.
+
+\subsection{Multímetro}
+
+O multímetro é o “canivete suíço” da eletrônica. Ele não é um instrumento único, mas sim um aparelho que agrupa várias ferramentas de medição. As três principais funções (que dão nome ao aparelho: Multi-medidor) são:
+
+\begin{itemize}
+	\item Voltímetro: Mede Tensão (Volts, $V$).
+	\item Amperímetro: Mede Corrente (Amperes, $A$).
+	\item Ohmímetro: Mede Resistência (Ohms, $\Omega$).
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{multimetro.png}
+  \caption{Multímetro.}
+\end{figure}
+
+Para medir a tensão, é necessário saber a diferença de potencial entre dois pontos, ligando o terminal preto no negativo e o vermelho no ponto que quer medir, de forma paralela. Já para medir a corrente ou a resistência, os dois terminais devem estar ligados em série no circuito, para identificarmos a corrente ou resistência naquele ramo.
+
+Em relação às escalas, imagine que você tem uma régua de 30cm e uma fita métrica de 5 metros.
+
+\begin{itemize}
+	\item Se você vai medir um lápis (15cm), a régua de 30cm é melhor porque tem marcações de milímetros (mais precisão).
+	\item Se você tentar medir uma parede de 3 metros com a régua de 30cm, não vai caber (o multímetro mostra erro).
+\end{itemize}
+
+No multímetro é igual. O botão do meio seleciona o teto máximo que ele aguenta ler naquela posição. Se você não tem ideia de quanto vale a corrente ou tensão, comece SEMPRE pela escala mais alta possível e vá baixando até ter uma leitura precisa.
+
+Se você abrir um multímetro, verá que a mágica da medição acontece de formas muito diferentes para correntes fracas e fortes. Por isso, eles separam as entradas fisicamente. Geralmente, as entradas são:
+
+\begin{itemize}
+    \item \textbf{COM (Comum / Preto):} É o "terra" ou negativo. A ponta preta sempre fica aqui, não importa o que você vá medir. Ela é ligada direto ao negativo da bateria interna e ao referencial do circuito.
+    \item \textbf{V$\Omega$mA (Vermelha - O "Faz Tudo"):} Aqui você mede Tensão (Volts), Resistência ($\Omega$) e Correntes baixas (mA - miliamperes).
+    \begin{itemize}
+        \item \textit{Como funciona:} Dentro dessa entrada existe um fusível de proteção (geralmente 200mA ou 500mA). Se você tentar medir a corrente de um motor forte aqui, esse fusível queima instantaneamente para salvar o aparelho.
+    \end{itemize}
+    \item \textbf{10A (ou 20A) (Vermelha - A "Bruta"):} É aqui que mora o perigo e a utilidade para robótica. Esta entrada é exclusiva para correntes altas.
+    \begin{itemize}
+        \item \textit{Como funciona:} Dentro do multímetro, esta entrada liga a ponta vermelha a um fio grosso de metal (chamado Shunt) que conecta quase direto no COM.
+        \item \textit{Por que é separada?} A corrente passa por esse fio grosso, o multímetro mede a minúscula queda de tensão nesse fio e calcula a corrente. Se essa corrente toda passasse pelos circuitos delicados da entrada "V$\Omega$mA", ela derreteria as trilhas da placa.
+        \item \textbf{Atenção:} Na maioria dos multímetros baratos, essa entrada NÃO TEM FUSÍVEL (escrito "Unfused"). Se você ligar errado (em paralelo com a bateria), vai sair faísca e o fio do multímetro pode derreter na sua mão.
+    \end{itemize}
+\end{itemize}
+
+Outros elementos que podem estar associados ao circuito elétrico são os chamados dispositivos de controle, responsáveis em medir e controlar as variáveis de um circuito, como o potencial elétrico e a corrente elétrica. Entre os vários dispositivos com essa função, podemos citar o amperímetro e o voltímetro, representados na figura 6 com seus respectivos símbolos utilizados em diagramas de circuito elétrico
+Outros elementos que podem estar associados ao circuito elétrico são os chamados dispositivos de controle, responsáveis em medir e controlar as variáveis de um circuito, como o potencial elétrico e a corrente elétrica. Entre os vários dispositivos com essa função, podemos citar o amperímetro e o voltímetro.
+
+% Vale destacar que os circuitos elétricos podem ter seus dispositivos associados em diferentes configurações, resultando em ligações em séries, paralelas ou mistas, conforme mostra a figura 7, tendo, como exemplo de dispositivo, os resistores.
+
+\subsection{LED}
+
+O LED precisa, ao ser inserido em um circuito elétrico, da utilização de um Resistor, o qual limita o fluxo da corrente que está passando pelo circuito elétrico. Portanto, a associação do Resistor ao LED visa ao aproveitamento máximo do brilho do LED sem danos ao componente por diminuir, no circuito, a corrente fornecida pelo Arduino quando utilizamos a porta de 5 V.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.35\textwidth]{led.png}
+  \caption{LED.}
+\end{figure}
+
+Para saber a posição correta do Resistor, visando à leitura das cores, verifique um espaçamento maior entre duas linhas – este espaçamento maior entre linhas ficará à sua direita, como na imagem acima, e as linhas à esquerda são os algarismos e multiplicador. Caso o Resistor possua o total de três linhas, ele não tem a linha de tolerância ou margem de erro – neste caso, considere uma tolerância média de 20\% e a linha do multiplicador estará totalmente à direita. Já os Resistores com seis linhas coloridas possuem um coeficiente de temperatura que indica a variação do valor do Resistor conforme a mudança de temperatura.
+
+Como vimos na figura acima, cada linha colorida informa um valor que, quando associado aos demais, determina a resistência em Ohms. No exemplo abaixo, temos a identificação de um Resistor de $220 \Omega$, indicado para utilização com LEDs, a partir da leitura de suas linhas coloridas.
+
+Por não possuir polaridade, os Resistores podem ser utilizados tanto em corrente contínua quanto em corrente alternada e, no momento de utilização do Resistor no circuito elétrico, a posição em que ele é colocado não influencia sua utilização. Por isso, o foco está no uso adequado do Resistor conforme a tensão presente no circuito. 
+
+Para o cálculo do Resistor adequado a um LED, adota-se a Lei de Ohm, na qual Resistência = Tensão / Corrente, porém, no circuito, é preciso definir tensão da fonte - tensão do LED. Neste caso,
+
+\begin{equation}
+	R = \frac{V_{CC} - V_{LED}}{Corrente_{LED}}
+\end{equation}
+
+Outro ponto a saber, para definir qual Resistor é adequado ao LED, se o LED é difuso, ou seja, com a cápsula na cor a ser emitida, ou alto brilho, quando sua cápsula é transparente (independentemente da cor a ser emitida).
+
+Geralmente, os LEDs alto brilho (com cápsula transparente) utilizam corrente entre 10mA e 20mA, enquanto os LEDs difuso (com cápsula colorida) utilizam corrente entre 5mA e 10mA. Para maior precisão, pode-se consultar, junto aos fabricantes de componentes eletrônicos, o datasheet, ou seja, as especificações técnicas dos componentes (tensão, corrente e demais informações). Caso não seja possível a consulta ao datasheet, pode-se utilizar uma tabela padrão, como a disponível no quadro abaixo: 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{tabela-leds.jpg}
+  \caption{Tabela de LEDs.}
+  \label{fig:arduino}
+\end{figure}
+
+\subsection{HC-SR04}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{HC-SR04.png}
+  \caption{Sensor ultassônico HC-SR04.}
+  \label{fig:arduino}
+\end{figure}
+
+\subsection{Protoboard}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{protoboard.png}
+  \caption{Protoboard.}
+  \label{fig:arduino}
+\end{figure}
+
+\section{Arduino}
+
+Cada elemento presente na placa possui função específica, a saber:
+
+\begin{itemize}
+	\item Microcontrolador: corresponde ao principal dispositivo presente na placa Arduino, pois é responsável em rodar o código de programação enviado à placa. Este circuito integrado do Arduino Nano utiliza o modelo de microcontrolador ATmega328, com 32kb de memória flash (onde será salvo os programas) e 2kb de SRAM (onde serão gravadas as variáveis dos programas). Este microcontrolador permite executar programas simples, como o piscar de um LED, até programações complexas, como o controle de acesso controlado por rede.
+
+	\item Conector USB: é um cabo removível que possibilita conectar dispositivos periféricos ao computador. No Arduino Nano, este cabo serve para transmitir dados de programação, além de servir como fonte de energia à placa de prototipagem eletrônica.
+
+	\item Pinos de Entrada e Saída: também chamados de portas, são orifícios de entrada (input) ou saída (output) que permite a interação do Arduino com o meio externo. No Arduino Nano, observamos 6 pinos de entradas analógicas e 14 pinos digitais (I/O), dentre eles, 6 portas modulam sinal analógico (PWM) e são identificadas pelo sinal gráfico til (~) antes da numeração, sendo elas: portas 3, 5, 6, 9, 10 e 11. Falaremos mais sobre essas portas posteriormente.
+
+	\item Pinos de Alimentação: são conectores que servem para energizar algum circuito externo ligado ao Arduino. Esses pinos possibilitam a adaptação do circuito à voltagem fornecida pela placa de prototipagem eletrônica. Esses pinos são identificados na placa Arduino como: IOREF; RESET; 3,3V; 5V, GND e VIN.
+
+	\item Botão de Reset: é o dispositivo que permite reiniciar a placa de prototipagem eletrônica.
+
+	\item Conversor Serial-USB e LEDs TX/RX: é uma porta que converte uma conexão USB em conexão serial de 5V, permitindo a comunicação direta entre o microcontrolador (Arduino Nano) e o computador. As conexões entre esses dois elementos são sinalizadas pelos LEDs TX e RX, os quais acendem, informando o recebimento ou transmissão de dados pela porta serial. Esta sinalização ocorre da seguinte maneira: o LED TX pisca quando ocorre transmissão de informação do Arduino para o computador; quando a informação for enviada do computador para o Arduino, quem pisca é o LED RX. 
+
+	\item Conector de Alimentação: corresponde a um conector com centro positivo, responsável pela alimentação externa (não USB) do Arduino Nano. Os valores de tensões recomendados para fonte externa é de 7V a 12V, garantindo, assim, o perfeito funcionamento da placa Arduino.
+
+	\item LED de Alimentação: componente eletrônico que sinaliza (acende) quando a placa Arduino Nano está energizada.
+
+	\item LED Interno: componente eletrônico integrado à porta digital 13 da placa Arduino. Quando o LED estiver aceso, indica que o pino 13 está com valor alto (HIGH), e quando o LED estiver apagado, indica que o valor do pino 13 está com valor baixo (LOW). 
+\end{itemize}
+
+Entre as estruturas presentes na placa de prototipagem eletrônica, destacamos, os pinos ou portas que atuam como entradas ou saídas digitais. No Arduino Nano, estas portas são representadas pelos números de 0 a 13, como mostra a figura \ref{fig:arduino}. Para definir o modo de entrada e saída dos pinos, faz-se necessário configurá-los em sua programação.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{arduino-nano.jpg}
+  \caption{Arduino Nano.}
+  \label{fig:arduino}
+\end{figure}
+
+Antes de programarmos a configuração das portas digitais do Arduino Nano, no modo entrada ou saída, precisamos entender que esses modos são responsáveis pela leitura e escrita de um valor digital, seja ele de 0V ou de 5V. O modo entrada digital permite a leitura de componentes eletrônicos que enviam sinais elétricos em 0V ou 5V. Podemos citar, como exemplos, os sensores e chaves com comandos On-Off. Quando programamos a porta como entrada digital, a colocamos em um estado de alta impedância elétrica, isto significa que o circuito absorve uma corrente elétrica muito baixa e o nível de tensão presente nesta porta oscila entre 0V e 5V. A estabilidade desta oscilação é feita por resistores pull-up, os quais facilitam a ligação de teclas e sensores no valor de 5V. Estes resistores fazem parte do microcontrolador ATmega328, presente na placa de Arduino Nano.
+
+A saída digital utiliza o valor 5V para acionar um componente eletrônico conectado à placa de Arduino e o valor 0V para desacionar este componente. Podemos citar, como exemplos de componentes que utilizam a saída digital: LED, transmissor, motor CC e relé. Ao contrário da porta de entrada digital, ao configurarmos um pino como saída digital, o colocamos em um estado de baixa impedância, o que permite ao circuito fornecer ou drenar a corrente elétrica neste pino,
+sem a necessidade da utilização de resistores.
+
+\section{Configurando as portas digitais}
+
+O software Arduino IDE possui funções que permitem programar a configuração das portas de entrada ou saída digitais da placa Arduino Nano, definir o nível lógico e realizar leituras destas portas, durante a escrita do código-fonte. Essas funções são denominadas de pinMode, digitalWrite e digitalRead.
+
+A função pinMode é responsável pela configuração das portas como entrada (Input) ou saída (Output) digital e apresenta os seguintes parâmetros: pin ou pino que corresponde ao número da porta que deseja configurar, no caso do Arduino Nano pode ser de 0 a 13, e Mode ou modo que identifica a configuração da porta, podendo ser: Input para entrada digital ou Output para saída digital. Por exemplo, para configurar a porta 10 como saída digital, utilizamos o código de programação \lstinline{pinMode (10, OUTPUT)}.
+
+A partir da configuração da porta digital, o próximo passo é determinar o nível lógico desta porta e realizar leituras durante a execução da programação. Para tanto, utilizamos a função digitalWrite, a qual determina o nível lógico que a porta de saída digital deve apresentar, sendo LOW para nível baixo, correspondendo a 0V, ou HIGH para nível alto, correspondendo a 5V. Na programação desta função são utilizados os seguintes parâmetros: número da porta de saída digital e valor do nível lógico presente nesta. Por exemplo, para configurar a porta 10 em nível lógico alto, utilizamos o código de programação: \lstinline{digitalWrite (10, HIGH)}.
+
+Para a leitura do valor presente na porta de saída digital, utilizamos a função digitalRead, a qual informa se o pino apresenta um valor baixo, representado pelo parâmetro LOW, ou um valor alto, representado pelo parâmetro HIGH. Na codificação, o parâmetro LOW pode ser representado pelo binário 0, e o parâmetro HIGH pelo binário 1. 
+
+Na função digitalRead, estes dois parâmetros são classificados como retorno e determinam o estado ativado ou desativado de um sensor.
+
+O Telemetrix é uma biblioteca Python que permite controlar o Arduino remotamente. Diferente do Arduino IDE, onde o código é compilado e enviado para a placa, o Telemetrix roda o código Python no computador e envia comandos para o Arduino via porta serial.
+
+Para utilizar o Telemetrix, é necessário ter o Python instalado. A instalação da biblioteca é feita através do gerenciador de pacotes pip:
+\begin{lstlisting}
+pip install telemetrix
+\end{lstlisting}
+
+Além disso, é necessário carregar o firmware \textit{Telemetrix4Arduino} na placa Arduino Nano. Este firmware atua como um servidor, recebendo os comandos do Python e executando-os no hardware.
+
+\section{Variáveis}
+
+No universo da programação é muito comum o uso de variáveis para armazenar informações ou valores na memória. Em Python com Telemetrix, o uso de variáveis é direto e dinâmico.
+
+Para criar uma variável em Python, basta atribuir um valor a um nome. Não é necessário declarar o tipo da variável explicitamente. Por exemplo:
+\begin{lstlisting}
+led_pin = 13
+delay_time = 1
+\end{lstlisting}
+Essas variáveis podem então ser utilizadas nas funções do Telemetrix para controlar os pinos ou definir tempos de espera.
+
+\section{Criando funções}
+
+Se você precisar de um trecho de código que será reutilizado várias vezes, você pode criar uma função.
+
+Em Python, utilizamos a palavra-chave \lstinline{def} para definir uma função. Você pode adicionar parâmetros para tornar a função mais flexível. Por exemplo, crie uma função chamada \lstinline{piscar} com um parâmetro chamado \lstinline{tempo}:
+
+\begin{lstlisting}
+def piscar(tempo):
+    board.digital_write(13, 1)
+    time.sleep(tempo)
+    board.digital_write(13, 0)
+    time.sleep(tempo)
+\end{lstlisting}
+
+Depois de definida, você pode chamar essa função em qualquer parte do seu programa.
+
+\section{Bibliotecas}
+
+Assim como no Arduino IDE, o Python possui um vasto ecossistema de bibliotecas que podem ser utilizadas em conjunto com o Telemetrix.
+
+Bibliotecas podem ser instaladas via pip. Por exemplo, para utilizar funções de tempo, importamos a biblioteca \lstinline{time}. Para matemática avançada, podemos usar \lstinline{numpy}.
+
+Para utilizar uma biblioteca no seu código, basta usar o comando \lstinline{import}.
+
+\begin{lstlisting}
+import time
+from telemetrix import telemetrix
+\end{lstlisting}
+
+Para iniciar a comunicação com o Arduino, instanciamos a classe Telemetrix:
+
+\begin{lstlisting}
+board = telemetrix.Telemetrix()
+\end{lstlisting}
+
+Ao executar o script Python, o computador se conecta à placa Arduino Nano e inicia o envio de comandos. Com a utilização do Python e Telemetrix, poderemos programar vários comandos para que sejam executados nas diferentes atividades propostas ao longo deste módulo de robótica.
+
+%\begin{problemset}
+%  \item \question{Como calcular a resistência mínima para não queimar um LED?}
+%  Utilizamos a Lei de Ohm adaptada: \lstinline{R = (V_fonte - V_led) / I_led}. Para um Arduino Nano (\lstinline{5V}) e um LED vermelho (\lstinline{2V}, \lstinline{20mA}), a resistência mínima é \lstinline{150\Omega}. Recomenda-se o uso de \lstinline{220\Omega} ou \lstinline{330\Omega} para maior segurança.
+%
+%  \item \question{Qual a diferença entre o corpo azul e o bege de um resistor?}
+%  A cor de fundo geralmente indica o material e a precisão. O corpo \textbf{azul} indica um resistor de Filme Metálico com tolerância de \lstinline{1\%}, enquanto o \textbf{bege} indica Filme de Carbono com tolerância de \lstinline{5\%}. Resistores azuis são mais estáveis e precisos para sensores.
+%
+%  \item \question{Por que o sensor ultrassônico HC-SR04 possui dois "olhos"?}
+%  O sensor funciona por ecolocalização: um dos cilindros é o \lstinline{Trig} (emissor), que envia um pulso sonoro, e o outro é o \lstinline{Echo} (receptor), que aguarda o retorno do som após atingir um objeto. A distância é calculada com base no tempo de voo do som.
+%
+%  \item \question{A corrente do LED é definida pelo Arduino ou pelo resistor?}
+%  A corrente é definida pela carga (resistor + LED). O Arduino apenas fornece a tensão constante de \lstinline{5V} e possui um limite máximo de fornecimento (cerca de \lstinline{40mA} por pino e \lstinline{500mA} no total via USB). É o resistor que "freia" a corrente para o valor desejado.
+%
+%  \item \question{Para que serve a memória EEPROM do Arduino Nano?}
+%  A EEPROM serve para armazenar dados de forma não volátil, ou seja, as informações permanecem gravadas mesmo após o Arduino ser desligado. É ideal para salvar configurações, recordes de sensores ou contadores de inicialização.
+%
+%  \item \question{O que acontece se eu ligar um LED sem resistor no pino digital?}
+%  O LED tentará drenar o máximo de corrente possível da porta do Arduino. Como o LED não possui resistência interna significativa, a corrente ultrapassará o limite de segurança (\lstinline{20mA}), resultando na queima imediata do LED e possível dano ao pino do microcontrolador.
+%\end{problemset}
+
+\chapter{Experimentos}
+
+\begin{introduction}
+  \item Hello World
+  \item Divisor de tensão
+  \item Conversão Binária
+  \item Controle de Tráfego
+  \item Sensor de ré
+\end{introduction}
+
+\section{Hello World}
+
+\begin{lstlisting}[language=Python, showstringspaces=false]
+import time
+from telemetrix import telemetrix
+
+# Instanciar a placa
+board = telemetrix.Telemetrix()
+
+# Definir o pino do LED (o LED interno do Nano e o 13)
+LED_PIN = 13
+
+# Configurar o pino como saida digital
+board.set_pin_mode_digital_output(LED_PIN)
+
+print("Sistema iniciado! A piscar o LED... (Pressione Ctrl+C para parar)")
+
+try:
+    while True:
+        # Liga o LED (1)
+        board.digital_write(LED_PIN, 1)
+        print("LED: Ligado")
+        time.sleep(0.5)
+
+        # Desliga o LED (0)
+        board.digital_write(LED_PIN, 0)
+        print("LED: Desligado")
+        time.sleep(0.5)
+
+except KeyboardInterrupt:
+    board.digital_write(LED_PIN, 0)
+    print("\nParando o sistema...")
+
+finally:
+    # E importante encerrar a ligacao para libertar a porta serial
+    board.shutdown()
+\end{lstlisting}
+
+Para montar este circuito, você pode utilizar o LED que já vem integrado na placa Arduino Nano (conectado ao pino 13). Caso queira usar um LED externo:
+\begin{enumerate}
+    \item Conecte a perna mais longa do LED (Anodo) ao pino digital \textbf{13} do Arduino.
+    \item Conecte a perna mais curta do LED (Catodo) a um dos terminais de um resistor de $220\Omega$.
+    \item Conecte o outro terminal do resistor ao pino \textbf{GND} do Arduino.
+\end{enumerate}
+
+Vamos entender o que cada parte deste código faz, passo a passo, para quem nunca programou:
+
+\begin{itemize}
+    \item \textbf{Importações (\lstinline{import})}: No início, trazemos ferramentas prontas. \lstinline{time} serve para controlar o tempo (pausas) e \lstinline{telemetrix} é a ferramenta que conversa com o Arduino.
+    \item \textbf{Inicialização (\lstinline{board = ...})}: Criamos uma conexão com a placa. É como abrir uma linha telefônica com o Arduino.
+    \item \textbf{O Loop (\lstinline{while True})}: Tudo que está dentro deste bloco (indentado para a direita) vai se repetir para sempre. É o coração do programa.
+    \item \textbf{Ação (\lstinline{digital_write})}: Enviamos o comando para o pino. \lstinline{1} significa ligar (energia passa) e \lstinline{0} significa desligar.
+    \item \textbf{Pausa (\lstinline{time.sleep})}: O programa espera o tempo definido (em segundos) antes de continuar. Sem isso, o LED piscaria tão rápido que nossos olhos não perceberiam.
+\end{itemize}
+
+\section{Divisor de tensão}
+
+O divisor de tensão é um dos circuitos mais fundamentais da eletrônica, utilizado principalmente para converter uma tensão alta em uma tensão menor proporcional. Sua importância reside na simplicidade e eficiência com que permite que componentes com diferentes requisitos de energia "conversem" entre si.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{divisor-de-tensao.png}
+  \caption{Divisor de Tensão}
+\end{figure}
+
+Como o Arduino não é capaz de medir a resistência diretamente, usamos um divisor de tensão para transformar a variação da resistência do sensor em uma variação de voltagem que o pino analógico consegue entender. Esta é a base de utilização de componentes como LDRs (sensores de luz).
+
+Portanto, neste experimento, utilizaremos um divisor de tensão para medir a resistência de um resistor. Este será o nosso ohmímetro (medidor de resistência), e poderemos utilizá-lo para conferir o valor de um resistor, se ainda estivermos em dúvida mesmo olhando a tabela. A equação de um divisor de tensão é dada por:
+
+\begin{equation}
+	V_o = \frac{R_2}{R_1 + R_2} \times V_i
+\end{equation}
+
+Esta equação nos dá a tensão de saída de um divisor de tensão. Para sabermos a resistência do resistor $R_1$, basta isolá-lo na equação:
+
+\begin{equation}
+	R_1 = R_2 \times \left( \frac{V_i}{V_o} - 1 \right)
+\end{equation}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{experimento-divisor-de-tensao.png}
+  \caption{Experimento: Divisor de Tensão.}
+\end{figure}
+
+\begin{lstlisting}[language=Python, showstringspaces=false]
+import time
+from telemetrix import telemetrix
+
+# Configuracoes Iniciais
+VI = 5.0
+ANALOG_PIN = 0  # Pino A0
+board = telemetrix.Telemetrix()
+
+# Variavel global para armazenar a leitura (0.0 a 1.0)
+value = None
+
+def callback_analog(data):
+    """
+    data[0] = tipo de reporte
+    data[1] = pino
+    data[2] = valor (0 a 1023 no Telemetrix padrao)
+    """
+    global value
+    # O Telemetrix retorna 0-1023 por padrao, vamos normalizar para 0.0-1.0
+    value = data[2] / 1023.0
+
+# Configura o pino A0 para reporte analogico
+board.set_pin_mode_analog_input(ANALOG_PIN, callback=callback_analog)
+
+print("\n--- Ohmimetro Digital (Telemetrix) ---")
+
+try:
+    # Solicita o valor de R2 (Resistor conhecido)
+    r2_str = input("Digite o valor (Ohms) da resistencia conhecida (R2): ")
+    r2 = float(r2_str)
+
+    while True:
+        if value is not None and value > 0:
+            # Calculo de Vo (Tensao de Saida)
+            vo = value * VI
+
+            # Calculo de R1 (Resistencia Desconhecida)
+            # R1 = R2 * (Vi/Vo - 1)
+            r1 = r2 * (VI / vo - 1)
+
+            print(f"Vo: {vo:.2f}V | R1 Estimado: {r1:.2f} Ohms")
+        else:
+            print("Aguardando leitura estavel...")
+
+        time.sleep(1)
+
+except ValueError:
+    print("Erro: Por favor, digite um numero valido para a resistencia.")
+except KeyboardInterrupt:
+    print("\nFinalizando...")
+finally:
+    board.shutdown()
+\end{lstlisting}
+
+A montagem do circuito divisor de tensão para este ohmímetro segue a lógica da equação utilizada no código:
+\begin{enumerate}
+    \item Conecte o pino \textbf{5V} do Arduino a uma das pernas do Resistor Desconhecido ($R1$).
+    \item Conecte a outra perna de $R1$ ao pino analógico \textbf{A0} do Arduino.
+    \item No mesmo ponto de conexão do A0 (entre os resistores), conecte uma perna do Resistor Conhecido ($R2$).
+    \item Conecte a outra perna de $R2$ ao pino \textbf{GND}.
+\end{enumerate}
+
+Neste código, introduzimos conceitos importantes de lógica de programação:
+
+\begin{itemize}
+    \item \textbf{Variáveis}: \lstinline{VI}, \lstinline{ANALOG_PIN} são nomes que damos para valores. Se precisarmos mudar o pino depois, mudamos só ali em cima e o código todo se atualiza.
+    \item \textbf{Callback}: O Arduino lê o sensor o tempo todo. A função \lstinline{callback_analog} é um "aviso". Sempre que o Arduino tiver um novo valor, ele para o que está fazendo, executa essa função para atualizar a variável \lstinline{value}, e depois volta.
+    \item \textbf{Matemática}: Diferente do Arduino IDE (C++), aqui fazemos as contas complexas (\lstinline{vo = ...}, \lstinline{r1 = ...}) no computador, que é muito mais poderoso que o microcontrolador.
+\end{itemize}
+
+\section{Conversão de Decimal para Binário}
+
+Este experimento demonstra a interface entre entrada de dados via terminal serial e a resposta física de um sistema embarcado. Utilizamos quatro LEDs para representar um número binário de 4 bits, permitindo a visualização de valores entre 0 e 15.
+
+A conversão baseia-se em operações de \textit{bitwise}. O valor decimal recebido é processado bit a bit através do operador de deslocamento (\lstinline{>>}) e de uma máscara lógica (\lstinline{& 1}). No sistema de 4 bits, cada LED assume o peso de uma potência de base 2:
+
+\begin{itemize}
+    \item LED 1 (Pino 6): $2^0 = 1$ (Bit menos significativo - LSB)
+    \item LED 2 (Pino 7): $2^1 = 2$
+    \item LED 3 (Pino 8): $2^2 = 4$
+    \item LED 4 (Pino 9): $2^3 = 8$ (Bit mais significativo - MSB)
+\end{itemize}
+
+A tabela abaixo descreve o estado dos LEDs (1 para ligado, 0 para desligado) para cada entrada decimal:
+
+\begin{table}[htbp]
+	\centering
+    \caption{Mapeamento Decimal para Binário nos LEDs.}
+	\begin{tabular}{cccccc}
+	\toprule
+	\textbf{Decimal} & \textbf{Hexadecimal} & \textbf{8 ($2^3$)} & \textbf{4 ($2^2$)} & \textbf{2 ($2^1$)} & \textbf{1 ($2^0$)} \\ 
+    \midrule
+	0  & 0 & 0 & 0 & 0 & 0 \\ 
+	1  & 1 & 0 & 0 & 0 & 1 \\ 
+	2  & 2 & 0 & 0 & 1 & 0 \\ 
+	3  & 3 & 0 & 0 & 1 & 1 \\ 
+	4  & 4 & 0 & 1 & 0 & 0 \\ 
+	5  & 5 & 0 & 1 & 0 & 1 \\ 
+	6  & 6 & 0 & 1 & 1 & 0 \\ 
+	7  & 7 & 0 & 1 & 1 & 1 \\ 
+	8  & 8 & 1 & 0 & 0 & 0 \\ 
+	9  & 9 & 1 & 0 & 0 & 1 \\ 
+	10 & A & 1 & 0 & 0 & 1 \\ 
+	11 & B & 1 & 0 & 1 & 0 \\ 
+	12 & C & 1 & 0 & 1 & 1 \\ 
+	13 & D & 1 & 1 & 0 & 0 \\ 
+	14 & E & 1 & 1 & 0 & 1 \\ 
+	15 & F & 1 & 1 & 1 & 1 \\ 
+    \bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{experimento_bits.png}
+  \caption{Experimento: Conversão decimal para binário.}
+\end{figure}
+
+\begin{lstlisting}[language=Python, showstringspaces=false]
+from telemetrix import telemetrix
+
+# Configuracao dos Pinos (MSB para LSB: 9, 8, 7, 6)
+LED_PINS = [9, 8, 7, 6]
+
+# Inicializacao da Placa
+board = telemetrix.Telemetrix()
+
+# Configuracao dos Modos dos Pinos
+for pin in LED_PINS:
+    board.set_pin_mode_digital_output(pin)
+
+print("\nMaquina Binaria")
+print("Converta numeros de 0 a 15 em sinais de luz.")
+
+try:
+    while True:
+        user_input = input("> ")
+
+        # Validacao simples de entrada
+        if not user_input.isdigit():
+            print("Por favor, digite um numero inteiro.")
+            continue
+
+        number = int(user_input)
+
+        if 0 <= number <= 15:
+            # Gera a string binaria de 4 bits (ex: "0101")
+            binary_str = format(number, '04b')
+
+            # Percorre a string e atualiza cada LED correspondente
+            for i in range(4):
+                bit = int(binary_str[i])
+                board.digital_write(LED_PINS[i], bit)
+
+            print(f"Numero: {number} | Binario: {binary_str}")
+        else:
+            print("Erro: Escolha um numero entre 0 e 15!")
+
+except KeyboardInterrupt:
+    print("\nEncerrando e limpando hardware...")
+
+finally:
+    # Garante que todos os LEDs apaguem e a conexao feche
+    for pin in LED_PINS:
+        board.digital_write(pin, 0)
+    board.shutdown()
+\end{lstlisting}
+
+Para a montagem, conecte quatro LEDs aos pinos digitais definidos na lista \lstinline{LED_PINS}:
+\begin{enumerate}
+    \item Conecte o anodo do LED correspondente ao bit 8 ao pino \textbf{9}.
+    \item Conecte o anodo do LED correspondente ao bit 4 ao pino \textbf{8}.
+    \item Conecte o anodo do LED correspondente ao bit 2 ao pino \textbf{7}.
+    \item Conecte o anodo do LED correspondente ao bit 1 ao pino \textbf{6}.
+    \item Conecte o catodo de todos os LEDs ao GND através de resistores de $220\Omega$.
+\end{enumerate}
+
+Aqui manipulamos vários LEDs de uma vez usando estruturas de dados:
+
+\begin{itemize}
+    \item \textbf{Listas (\lstinline{[...]})}: Em vez de criar uma variável para cada LED, colocamos todos numa lista \lstinline{LED_PINS}. É como uma gaveta com vários compartimentos numerados.
+    \item \textbf{Laço \lstinline{for}}: Usamos \lstinline{for pin in LED_PINS} para configurar todos os pinos da lista de uma vez só. O computador repete a ação para cada item da gaveta.
+    \item \textbf{Lógica Binária}: O comando \lstinline{format(number, '04b')} é um tradutor. Ele transforma o número decimal (ex: 5) em texto binário ("0101"). Depois, o código lê cada caractere desse texto e liga ou desliga o LED correspondente.
+\end{itemize}
+
+\section{Controle de Tráfego}
+
+Este experimento visa a compreensão do fluxo de execução sequencial em sistemas embarcados.
+
+\subsection{Pinagem e Componentes}
+\begin{itemize}
+    \item \textbf{LED Verde}: Conectado ao pino digital 6.
+    \item \textbf{LED Amarelo}: Conectado ao pino digital 7.
+    \item \textbf{LED Vermelho}: Conectado ao pino digital 8.
+    \item \textbf{Resistores}: Três resistores de $220\Omega$ para limitar a corrente dos LEDs.
+\end{itemize}
+
+\subsection{Metodologia}
+O sistema deve operar em um ciclo infinito (\textit{loop}), respeitando os tempos de transição para garantir a segurança viária simulada:
+\begin{enumerate}
+    \item \textbf{Via Liberada}: Apenas o LED Verde permanece aceso por 5 segundos.
+    \item \textbf{Atenção}: O LED Verde apaga e o Amarelo acende por 2 segundos.
+    \item \textbf{Interrupção}: O LED Amarelo apaga e o Vermelho acende por 5 segundos.
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{experimento-semaforo.png}
+  \caption{Experimento: Semáforo.}
+\end{figure}
+
+\begin{lstlisting}[language=Python, showstringspaces=false]
+import time
+from telemetrix import telemetrix
+
+# 1. Configuracao dos Pinos
+LED_GREEN = 6
+LED_YELLOW = 7
+LED_RED = 8
+
+# Inicializacao da Placa
+board = telemetrix.Telemetrix()
+
+# Configurar pinos como saida digital
+board.set_pin_mode_digital_output(LED_GREEN)
+board.set_pin_mode_digital_output(LED_YELLOW)
+board.set_pin_mode_digital_output(LED_RED)
+
+print("Semaforo ativo! Pressione Ctrl+C para encerrar.")
+
+try:
+    while True:
+        # Verde aceso por 5 segundos
+        board.digital_write(LED_GREEN, 1)
+        board.digital_write(LED_YELLOW, 0)
+        board.digital_write(LED_RED, 0)
+        time.sleep(5)
+
+        # Amarelo aceso por 2 segundos
+        board.digital_write(LED_GREEN, 0)
+        board.digital_write(LED_YELLOW, 1)
+        board.digital_write(LED_RED, 0)
+        time.sleep(2)
+
+        # Vermelho aceso por 5 segundos
+        board.digital_write(LED_GREEN, 0)
+        board.digital_write(LED_YELLOW, 0)
+        board.digital_write(LED_RED, 1)
+        time.sleep(5)
+
+except KeyboardInterrupt:
+    print("\nEncerrando e desligando LEDs...")
+
+finally:
+    # Garante que todos os LEDs apaguem e a conexao serial seja liberada
+    board.digital_write(LED_GREEN, 0)
+    board.digital_write(LED_YELLOW, 0)
+    board.digital_write(LED_RED, 0)
+    board.shutdown()
+\end{lstlisting}
+
+A montagem simula um semáforo vertical:
+\begin{enumerate}
+    \item Conecte o LED Verde ao pino \textbf{6}.
+    \item Conecte o LED Amarelo ao pino \textbf{7}.
+    \item Conecte o LED Vermelho ao pino \textbf{8}.
+    \item Utilize resistores de proteção para cada LED ligados ao GND.
+\end{enumerate}
+
+Este é um exemplo clássico de \textbf{execução sequencial}:
+
+\begin{itemize}
+    \item O computador lê o código linha por linha, de cima para baixo, como uma receita de bolo.
+    \item Primeiro, ele acende o Verde e apaga os outros.
+    \item O comando \lstinline{time.sleep(5)} faz o computador "dormir" por 5 segundos. Durante esse tempo, o sinal continua verde porque ninguém mandou apagar.
+    \item Quando ele acorda, executa as próximas linhas: apaga o Verde, acende o Amarelo, e dorme de novo.
+\end{itemize}
+
+\section{Sensor de ré}
+
+Este experimento demonstra a integração entre um sensor ultrassônico HC-SR04 e um atuador visual (LED). O sistema utiliza o princípio de ecolocalização para medir a distância de objetos e ajustar a frequência de um alerta visual proporcionalmente à proximidade.
+
+Objetivos Técnicos
+\begin{itemize}
+    \item Compreender o funcionamento do sensor ultrassônico via pulsos de \textit{Trigger} e \textit{Echo}.
+    \item Implementar a conversão de tempo de resposta (\textit{Time of Flight}) em distância (cm).
+    \item Utilizar condicionais para tomar decisões com base na distância medida.
+\end{itemize}
+
+\subsection{Fundamentação Teórica}
+O sensor emite um sinal sonoro de alta frequência. Ao encontrar um obstáculo, o sinal retorna. A distância é calculada pela fórmula:
+$$d = \frac{\Delta t \cdot v_s}{2}$$
+Onde $\Delta t$ é o tempo de propagação e $v_s$ é a velocidade do som ($\approx 343$ m/s ou $0,0343$ cm/$\mu$s). No código, utilizamos o divisor $29,1$ para converter microssegundos em centímetros.
+
+Esquema de Montagem
+\begin{table}[htbp]
+	\centering
+    \caption{Esquema de Montagem do Sensor de Ré}
+	\begin{tabular}{lcc}
+	\toprule
+	\textbf{Componente} & \textbf{Pino Arduino} & \textbf{Função} \\ 
+    \midrule
+	HC-SR04 VCC & 5V & Alimentação \\ 
+	HC-SR04 GND & GND & Aterramento \\ 
+	HC-SR04 TRIG & 9 & Gatilho (Saída) \\ 
+	HC-SR04 ECHO & 10 & Eco (Entrada) \\ 
+	LED (Anodo) & 2 & Alerta (Saída) \\ 
+    \bottomrule
+	\end{tabular}
+\end{table}
+
+A montagem do sensor ultrassônico HC-SR04 exige atenção aos pinos de alimentação e sinal:
+\begin{enumerate}
+    \item Conecte o pino \textbf{VCC} do sensor ao 5V do Arduino.
+    \item Conecte o pino \textbf{GND} do sensor ao GND do Arduino.
+    \item Conecte o pino \textbf{Trig} ao pino digital \textbf{9}.
+    \item Conecte o pino \textbf{Echo} ao pino digital \textbf{10}.
+    \item O LED de alerta deve ser conectado ao pino \textbf{2} (com resistor).
+\end{enumerate}
+
+\begin{lstlisting}[language=Python, showstringspaces=false]
+import time
+from telemetrix import telemetrix
+
+# Configuracao dos Pinos
+TRIGGER_PIN = 9
+ECHO_PIN = 10
+LED_PIN = 2
+
+board = telemetrix.Telemetrix()
+
+# Variavel para armazenar a distancia
+current_distance = 100 # Comeca com um valor alto seguro
+
+# Funcao que o Telemetrix chama quando o sensor le a distancia
+def sonar_callback(data):
+    global current_distance
+    current_distance = data[2] # A distancia vem na posicao 2 dos dados
+
+board.set_pin_mode_digital_output(LED_PIN)
+# Configura o sensor ultrassonico (Trigger, Echo, Funcao de Retorno)
+board.set_pin_mode_sonar(TRIGGER_PIN, ECHO_PIN, sonar_callback)
+
+print("Sensor de Re Ativo. Aproxime a mao do sensor.")
+
+try:
+    while True:
+        print(f"Distancia: {current_distance} cm")
+        
+        # Logica de Decisao (Condicionais)
+        if current_distance < 10:
+            # Muito perto: LED aceso direto (PERIGO!)
+            board.digital_write(LED_PIN, 1)
+        elif current_distance < 30:
+            # Perto: LED pisca (ATENCAO!)
+            board.digital_write(LED_PIN, 1)
+            time.sleep(0.1)
+            board.digital_write(LED_PIN, 0)
+            time.sleep(0.1)
+        else:
+            # Longe: LED apagado
+            board.digital_write(LED_PIN, 0)
+            time.sleep(0.2)
+
+except KeyboardInterrupt:
+    print("\nEncerrando...")
+finally:
+    board.shutdown()
+\end{lstlisting}
+
+Neste experimento, o código reage ao ambiente em tempo real:
+
+\begin{itemize}
+    \item \textbf{Sonar}: Configuramos o sensor ultrassônico com \lstinline{set_pin_mode_sonar}. Ele funciona automaticamente em segundo plano, atualizando a variável \lstinline{current_distance} sempre que a distância muda.
+    \item \textbf{Condicionais (\lstinline{if/elif/else})}: É o cérebro do código, onde ele toma decisões.
+    \begin{itemize}
+        \item \textbf{Se (\lstinline{if})} a distância for menor que 10cm: O código entende como perigo iminente e deixa o LED aceso direto.
+        \item \textbf{Senão, se (\lstinline{elif})} for menor que 30cm: O código entende como alerta e faz o LED piscar.
+        \item \textbf{Senão (\lstinline{else})}: Se não for nenhuma das anteriores (está longe), ele apaga o LED.
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{experimento-sensor-proximidade.png}
+  \caption{Experimento: Sensor de Ré.}
+\end{figure}
+
+\printbibliography[heading=bibintoc, title=\ebibname]
+
+\end{document}
